@@ -1,0 +1,11 @@
+python-telegram-bot==21.6
+aiohttp
+protobuf
+protobuf-decoder
+pycryptodome
+psutil
+pyjwt
+pytz
+cfonts
+requests
+urllib3
