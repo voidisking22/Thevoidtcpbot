@@ -8,6 +8,7 @@ import os, sys, json, time, random, asyncio, logging
 import ssl, struct, hashlib, binascii, base64, re, threading
 import requests, aiohttp, urllib3
 from datetime import datetime
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 import jwt, pytz, psutil
 from cfonts import render, say
@@ -116,7 +117,7 @@ Hr = {
 # ═══════════════════════════════════════════════════════════
 #  ═══ PASTE HERE : xC4.py contents ═══
 #  copy the entire body of xC4.py (everything after its import block)
-#  into this exact spot. do not modify.
+#  into this exact spot.
 # ═══════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════
@@ -127,30 +128,14 @@ Hr = {
 # ═══════════════════════════════════════════════════════════
 #  ═══ PASTE HERE : xHeaders.py contents ═══
 #  copy the entire body of xHeaders.py (everything after its import block).
-#  NOTE: xHeaders.py already has the token scraper removed and GeTToK
-#  points to a local token.txt. nothing else to change.
 # ═══════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════
 #  ═══ PASTE HERE : main.py helper funcs ═══
 #  copy everything from your original main.py BETWEEN the constants
 #  block and the bottom `if __name__ == '__main__':` block.
-#  That includes:
-#    accept_squad_invite, create_lw5_packet1, create_lw5_packet2,
-#    leave_channel_req, MahirAccepted, NewClanChatPacket, SEndMsG,
-#    SEndPacKeT, evo_gun_cycle, SPamSq, SPamSqForSpm, spm_loop,
-#    spam_loop, start_spam_if_needed, JoinSq_original, GhostPakcet,
-#    xSKINZxLag, get_squad_info, send_spam_messages, GenJoinSquadsPacket,
-#    safe_send_message, check_banned, get_player_info, xBaNchaTxSkInZ,
-#    ban_loop, format_player_info, format_check_result, GeTSQDaTa,
-#    format_packet, encrypted_proto, GeNeRaTeAccEss, InspectToken,
-#    EncRypTMajoRLoGin, MajorLogin, GetLoginData, DecRypTMajoRLoGin,
-#    DecRypTLoGinDaTa, DecodeWhisperMessage, decode_team_packet,
-#    build_ob55_online_auth, create_auth_token_chat, cHTypE,
-#    send_friend_request, remove_friend, TcPOnLine, TcPChaT, MaiiiinE,
-#    StarTinG
 #
-#  THEN apply these edits inside the pasted code:
+#  THEN apply these edits:
 #    1. inside MaiiiinE(), replace:
 #           Uid, Pw = 'ADD_YOUR_UID', 'ADD_YOUR_PASS'
 #       with:
@@ -162,14 +147,10 @@ Hr = {
 #           iv_global  = iv
 #
 #    3. inside TcPChaT(), DELETE the entire `if inPuTMsG.startswith(...)`
-#       chain (all the /5 /6 /join /gh /lag /msg /spm /stp /ban /check
-#       /info /add /remove /admin /help /evos /sevos /exit /cs5 handlers).
-#       Those live in the telegram layer now. KEEP the parts that handle
-#       whisper parsing, auto-accept invites, kick detection, .ready /
-#       .unready.
+#       chain. KEEP whisper parsing, auto-accept, kick detection,
+#       .ready / .unready.
 #
-#    4. do NOT paste the `if __name__ == '__main__': asyncio.run(StarTinG())`
-#       block — we boot the engine from engine_loop() instead.
+#    4. do NOT paste the `if __name__ == '__main__':` block.
 # ═══════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════
@@ -341,7 +322,6 @@ async def cmd_sevos():
     return False, "ɴᴏ ᴀᴄᴛɪᴠᴇ ᴄʏᴄʟᴇ"
 
 async def engine_loop():
-    """background: boot free-fire engine, keep it alive forever"""
     while True:
         try:
             await asyncio.wait_for(MaiiiinE(), timeout=7 * 60 * 60)
@@ -582,16 +562,40 @@ COMMANDS = [
 ]
 
 # ═══════════════════════════════════════════════════════════
+#  HEALTH SERVER — for render web service
+# ═══════════════════════════════════════════════════════════
+
+class _Health(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain")
+        self.send_header("Content-Length", "2")
+        self.end_headers()
+        self.wfile.write(b"ok")
+    def do_HEAD(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain")
+        self.end_headers()
+    def log_message(self, *a):
+        pass
+
+def _serve_health():
+    port = int(os.getenv("PORT", "8080"))
+    srv = HTTPServer(("0.0.0.0", port), _Health)
+    log.info(f"health server on :{port}")
+    srv.serve_forever()
+
+# ═══════════════════════════════════════════════════════════
 #  BOOT
 # ═══════════════════════════════════════════════════════════
 
 def main():
+    threading.Thread(target=_serve_health, daemon=True).start()
+
     app = Application.builder().token(BOT_TOKEN).build()
 
     async def _post_init(application):
-        # register slash menu
         await application.bot.set_my_commands(COMMANDS)
-        # boot the engine in the background
         asyncio.create_task(engine_loop())
         log.info("engine loop scheduled · command menu registered")
 
