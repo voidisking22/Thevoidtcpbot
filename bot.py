@@ -590,6 +590,13 @@ def _serve_health():
 # ═══════════════════════════════════════════════════════════
 
 def main():
+    # ─── python 3.14+ fix: create event loop explicitly ───
+    try:
+        asyncio.get_event_loop()
+    except RuntimeError:
+        asyncio.set_event_loop(asyncio.new_event_loop())
+
+    # ─── health server for render web-service ───
     threading.Thread(target=_serve_health, daemon=True).start()
 
     app = Application.builder().token(BOT_TOKEN).build()
