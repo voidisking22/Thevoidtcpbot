@@ -1,6 +1,6 @@
 # ═══════════════════════════════════════════════════════════
 #  THE VOID TCP BOT — single file
-#  telegram frontend + free fire tcp engine in one loop
+#  telegram frontend + free fire tcp engine
 #  dev : VOID · @voidisking
 # ═══════════════════════════════════════════════════════════
 
@@ -32,7 +32,7 @@ from byte import Encrypt_ID, encrypt_api
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # ═══════════════════════════════════════════════════════════
-#  CONFIG  (all env-driven)
+#  CONFIG
 # ═══════════════════════════════════════════════════════════
 
 BOT_TOKEN  = os.getenv("BOT_TOKEN", "").strip()
@@ -46,9 +46,9 @@ SUPPORT_2  = "@lordofzone"
 CHANNEL    = "https://t.me/kingvoidofficial"
 GROUP      = "https://t.me/voidofficialgc"
 
-if not BOT_TOKEN:              raise SystemExit("BOT_TOKEN missing")
-if not VOID_UID or not VOID_PASS: raise SystemExit("VOID_UID/VOID_PASS missing")
-if ADMIN_UID == 0:             raise SystemExit("ADMIN_UID missing")
+if not BOT_TOKEN:               raise SystemExit("BOT_TOKEN missing")
+if not VOID_UID or not VOID_PASS: raise SystemExit("VOID_UID / VOID_PASS missing")
+if ADMIN_UID == 0:              raise SystemExit("ADMIN_UID missing")
 
 logging.basicConfig(
     format="%(asctime)s | %(name)s | %(levelname)s | %(message)s",
@@ -115,82 +115,65 @@ Hr = {
 
 # ═══════════════════════════════════════════════════════════
 #  ═══ PASTE HERE : xC4.py contents ═══
-#  (all the EnC_* / DEc_* / CrEaTe_ProTo / GeneRaTePk / ArA_CoLor / xBunnEr /
-#   xSEndMsg / xSEndMsgsQ / AuthClan / AutH_GlobAl / LagSquad / GeT_Status /
-#   SPam_Room / GenJoinSquadsPacket / GenJoinGlobaL / FS / Emote_k / AutH_Chat /
-#   Msg_Sq / ghost_packet / CreateNewSquad / ChangeSquadTo5 / SendInvite /
-#   OpEnSq / cHSq / SEnd_InV / ExiT / JoinSquadByTeamCode / DeCode_PackEt /
-#   Fix_PackEt / Ua / xMsgFixinG)
-#  ═══════════════════════════════════════════════════════════
-
-# <-- copy the whole body of xC4.py minus its `import` block here
+#  copy the entire body of xC4.py (everything after its import block)
+#  into this exact spot. do not modify.
+# ═══════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════
 #  ═══ PASTE HERE : xP.py contents ═══
-#  (JoinSq, OpenCh, MsqSq, ExitSq, SendSq, GhostSq, OpenSq, ChSq,
-#   GuiLd_AccEss, ResTarT_BoT, GeT_Time, EnC_Uid, CrEaTe_ProTo sync variant, etc.)
-#  ═══════════════════════════════════════════════════════════
-
-# <-- copy the whole body of xP.py minus its `import` block here
+#  copy the entire body of xP.py (everything after its import block).
+# ═══════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════
-#  ═══ PASTE HERE : xHeaders.py contents (minus ToK scraper) ═══
-#  (ToK, equie_emote, GeTToK, Likes, Requests_SPam, GeT_Name,
-#   GeT_PLayer_InFo, DeLet_Uid, ChEck_The_Uid)
-#  ═══════════════════════════════════════════════════════════
-
-# <-- copy xHeaders.py body here, but REPLACE ToK() with:
-
-def GeTToK():
-    try:
-        with open("token.txt") as f:
-            return f.read().strip()
-    except FileNotFoundError:
-        return ""
-
-# and DELETE the `Thread(target=ToK, daemon=True).start()` line at the bottom.
+#  ═══ PASTE HERE : xHeaders.py contents ═══
+#  copy the entire body of xHeaders.py (everything after its import block).
+#  NOTE: xHeaders.py already has the token scraper removed and GeTToK
+#  points to a local token.txt. nothing else to change.
+# ═══════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════
-#  ═══ PASTE HERE : main.py helper funcs (the middle chunk) ═══
-#  (accept_squad_invite, create_lw5_packet1, create_lw5_packet2,
-#   leave_channel_req, MahirAccepted, NewClanChatPacket, SEndMsG,
-#   SEndPacKeT, evo_gun_cycle, SPamSq, SPamSqForSpm, spm_loop,
-#   spam_loop, start_spam_if_needed, JoinSq_original, GhostPakcet,
-#   xSKINZxLag, get_squad_info, send_spam_messages, GenJoinSquadsPacket,
-#   safe_send_message, check_banned, get_player_info, xBaNchaTxSkInZ,
-#   ban_loop, format_player_info, format_check_result, GeTSQDaTa,
-#   format_packet, encrypted_proto, GeNeRaTeAccEss, InspectToken,
-#   EncRypTMajoRLoGin, MajorLogin, GetLoginData, DecRypTMajoRLoGin,
-#   DecRypTLoGinDaTa, DecodeWhisperMessage, decode_team_packet,
-#   build_ob55_online_auth, create_auth_token_chat, cHTypE,
-#   send_friend_request, remove_friend, TcPOnLine, TcPChaT, MaiiiinE,
-#   StarTinG)
-#  ═══════════════════════════════════════════════════════════
-
-# <-- copy the whole middle of main.py here
-#     then make these edits:
-
-#   1. inside MaiiiinE() replace:
-#          Uid, Pw = 'ADD_YOUR_UID', 'ADD_YOUR_PASS'
-#      with:
-#          Uid, Pw = VOID_UID, VOID_PASS
+#  ═══ PASTE HERE : main.py helper funcs ═══
+#  copy everything from your original main.py BETWEEN the constants
+#  block and the bottom `if __name__ == '__main__':` block.
+#  That includes:
+#    accept_squad_invite, create_lw5_packet1, create_lw5_packet2,
+#    leave_channel_req, MahirAccepted, NewClanChatPacket, SEndMsG,
+#    SEndPacKeT, evo_gun_cycle, SPamSq, SPamSqForSpm, spm_loop,
+#    spam_loop, start_spam_if_needed, JoinSq_original, GhostPakcet,
+#    xSKINZxLag, get_squad_info, send_spam_messages, GenJoinSquadsPacket,
+#    safe_send_message, check_banned, get_player_info, xBaNchaTxSkInZ,
+#    ban_loop, format_player_info, format_check_result, GeTSQDaTa,
+#    format_packet, encrypted_proto, GeNeRaTeAccEss, InspectToken,
+#    EncRypTMajoRLoGin, MajorLogin, GetLoginData, DecRypTMajoRLoGin,
+#    DecRypTLoGinDaTa, DecodeWhisperMessage, decode_team_packet,
+#    build_ob55_online_auth, create_auth_token_chat, cHTypE,
+#    send_friend_request, remove_friend, TcPOnLine, TcPChaT, MaiiiinE,
+#    StarTinG
 #
-#   2. inside MaiiiinE(), right after `iv = MajoRLoGinauTh.iv`, add:
-#          global key_global, iv_global
-#          key_global = key
-#          iv_global  = iv
+#  THEN apply these edits inside the pasted code:
+#    1. inside MaiiiinE(), replace:
+#           Uid, Pw = 'ADD_YOUR_UID', 'ADD_YOUR_PASS'
+#       with:
+#           Uid, Pw = VOID_UID, VOID_PASS
 #
-#   3. inside TcPChaT(), DELETE the entire `if inPuTMsG.startswith(...)` block
-#      that handled /5 /6 /join /gh /lag /msg /spm /stp /ban /check /info /add
-#      /remove /admin /help /evos /sevos /exit /cs5. Those commands now live
-#      in the telegram layer (below). Keep the parts that handle whisper
-#      parsing, auto-accept invites, kick detection, `.ready` / `.unready`.
+#    2. inside MaiiiinE(), right after `iv = MajoRLoGinauTh.iv`, add:
+#           global key_global, iv_global
+#           key_global = key
+#           iv_global  = iv
 #
-#   4. delete the `if __name__ == '__main__': asyncio.run(StarTinG())` block at
-#      the bottom of main.py.
+#    3. inside TcPChaT(), DELETE the entire `if inPuTMsG.startswith(...)`
+#       chain (all the /5 /6 /join /gh /lag /msg /spm /stp /ban /check
+#       /info /add /remove /admin /help /evos /sevos /exit /cs5 handlers).
+#       Those live in the telegram layer now. KEEP the parts that handle
+#       whisper parsing, auto-accept invites, kick detection, .ready /
+#       .unready.
+#
+#    4. do NOT paste the `if __name__ == '__main__': asyncio.run(StarTinG())`
+#       block — we boot the engine from engine_loop() instead.
+# ═══════════════════════════════════════════════════════════
 
 # ═══════════════════════════════════════════════════════════
-#  PUBLIC API — called by the telegram handlers
+#  PUBLIC API — telegram handlers call these
 # ═══════════════════════════════════════════════════════════
 
 def engine_alive() -> bool:
@@ -358,8 +341,7 @@ async def cmd_sevos():
     return False, "ɴᴏ ᴀᴄᴛɪᴠᴇ ᴄʏᴄʟᴇ"
 
 async def engine_loop():
-    """background: boots the free-fire engine, keeps it alive forever"""
-    global key_global, iv_global
+    """background: boot free-fire engine, keep it alive forever"""
     while True:
         try:
             await asyncio.wait_for(MaiiiinE(), timeout=7 * 60 * 60)
@@ -603,17 +585,17 @@ COMMANDS = [
 #  BOOT
 # ═══════════════════════════════════════════════════════════
 
-async def _post_init(app):
-    await app.bot.set_my_commands(COMMANDS)
-    log.info("commands menu registered")
-
 def main():
-    app = Application.builder().token(BOT_TOKEN).post_init(_post_init).build()
+    app = Application.builder().token(BOT_TOKEN).build()
 
-    # engine (background task)
-    async def _start_engine(app):
-        app.create_task(engine_loop())
-    app.post_init_engine = _start_engine
+    async def _post_init(application):
+        # register slash menu
+        await application.bot.set_my_commands(COMMANDS)
+        # boot the engine in the background
+        asyncio.create_task(engine_loop())
+        log.info("engine loop scheduled · command menu registered")
+
+    app.post_init = _post_init
 
     app.add_handler(CommandHandler("start",  t_start))
     app.add_handler(CommandHandler("help",   t_help))
@@ -634,11 +616,6 @@ def main():
     app.add_handler(CommandHandler("sevos",  t_sevos))
     app.add_handler(CommandHandler("add",    t_add))
     app.add_handler(CommandHandler("remove", t_remove))
-
-    async def _boot(application):
-        application.create_task(engine_loop())
-
-    app.post_init = _boot
 
     log.info("🚀 ᴛʜᴇ ᴠᴏɪᴅ ᴛᴄᴘ ʙᴏᴛ sᴛᴀʀᴛɪɴɢ")
     app.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
