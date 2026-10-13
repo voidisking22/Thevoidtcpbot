@@ -1,0 +1,19 @@
+services:
+  - type: worker
+    name: void-tcp-bot
+    runtime: python
+    plan: starter
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: python bot.py
+    autoDeploy: true
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: VOID_UID
+        sync: false
+      - key: VOID_PASS
+        sync: false
+      - key: ADMIN_UID
+        sync: false
+      - key: PYTHON_VERSION
+        value: "3.11.9"
